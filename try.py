@@ -46,20 +46,53 @@ def doCall(username,password,startTime, endTime):
 # we will create a loop which will start from 09:16 to 14:29
 # for loop in python
 
+def write_times_to_file():
+    # Set the start time to 09:16
+    hour = 9
+    minute = 16
+
+    # Open the file for writing
+    with open("times.txt", "w") as f:
+        # Loop through all the times from 09:16 to 14:29
+        while hour <= 14:
+            # Get the current time as a string
+            time_str = f"{hour:02d}:{minute:02d}"
+
+            # Write the current time to the file
+            f.write(time_str + "\n")
+
+            # Increment the minute by 1
+            minute += 1
+
+            # If the minute reaches 60, reset it to 0 and increment the hour by 1
+            if minute == 60:
+                minute = 0
+                hour += 1
+
+            # If the hour reaches 15, break out of the loop
+            if hour == 15:
+                break
 
 
-input_values = [("7896907179", "SamsungS9+","0916","1529"),("7896907179", "SamsungS9+","0922","1520"),("7896907179", "SamsungS9+","0925","1320")]
 
-threads = []
 
-for input_value in input_values:
-    th = threading.Thread(target=doCall, args=input_value)
-    threads.append(th)
+write_times_to_file()
 
-for th in threads:
-    th.start()
+# how to put output in a text file
 
-for th in threads:
-    th.join()
 
-time.sleep(10)
+# input_values = [("7896907179", "SamsungS9+","0916","1529"),("7896907179", "SamsungS9+","0922","1520"),("7896907179", "SamsungS9+","0925","1320")]
+
+# threads = []
+
+# for input_value in input_values:
+#     th = threading.Thread(target=doCall, args=input_value)
+#     threads.append(th)
+
+# for th in threads:
+#     th.start()
+
+# for th in threads:
+#     th.join()
+
+# time.sleep(10)

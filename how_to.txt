@@ -1,0 +1,25 @@
+index
+entry time
+exit time
+atm (strike type)
+stop loss % (dono ka same rahega)
+end date
+overall profit 2021
+overall profit 2022
+overall profit 2023
+overall profit total
+Average Profit per Trade
+Win %
+Average Profit on Winning Trades
+Average Loss on Losing Trades
+Max Profit in Single Trade
+Max Loss in Single Trade
+Max Drawdown
+Days of Max Drawdown
+Reward to Risk Ratio
+Expectancy Ratio
+Mon
+Tue
+Wed
+Thurs
+Fri
