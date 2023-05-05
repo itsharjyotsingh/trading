@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Open the Excel file
-excel_file = pd.ExcelFile('sample.xlsx')
+excel_file = pd.ExcelFile('example.xlsx')
 
 # Check the sheet names
 print(excel_file.sheet_names)

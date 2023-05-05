@@ -16,7 +16,7 @@ threadsToWrite = []
 
 def doCall(startTime, endTime):
     with lock:
-        # time.sleep(3)
+        time.sleep(3)
         
         today = datetime.date.today()
 
@@ -28,31 +28,35 @@ def doCall(startTime, endTime):
         driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[1]/div[2]/div/div/div[3]/div[1]/div[1]/div/div/input").send_keys(startTime)
         driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[1]/div[2]/div/div/div[3]/div[2]/div[1]/div/div/input").send_keys(endTime)
 
-        # we will change the value of input box
-        driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[3]/div[2]/div/div[2]/div[2]/div[3]/div/input").clear()
-        driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[3]/div[2]/div/div[2]/div[2]/div[3]/div/input").send_keys("20")
+        # we will make today into string
+        # today = str(today)
+        # meriDate = today.split("-")
+        # meriDate = meriDate[2]+meriDate[1]+meriDate[0]
+        # driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[4]/div/div/div[2]/input").send_keys(meriDate)
 
         # we will change the value of input box
-        driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[3]/div[3]/div[2]/div/div[2]/div[2]/div[3]/div/input").clear()
-        driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[3]/div[3]/div[2]/div/div[2]/div[2]/div[3]/div/input").send_keys("20")
+        if(startTime=="1424"):
+            driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[3]/div[2]/div/div[2]/div[2]/div[3]/div/input").clear()
+            driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[3]/div[2]/div/div[2]/div[2]/div[3]/div/input").send_keys("20")
+
+            # we will change the value of input box
+            driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[3]/div[3]/div[2]/div/div[2]/div[2]/div[3]/div/input").clear()
+            driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[3]/div[3]/div[2]/div/div[2]/div[2]/div[3]/div/input").send_keys("20")
 
         # we will start backtest
         driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[2]/button[4]").click()
 
-        time.sleep(10)
+        time.sleep(6)
+
+        element = driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[4]/div[2]/table[1]/tbody/tr[1]/td[1]")
+        driver.execute_script("arguments[0].scrollIntoView();", element)
 
         days = ["all","monday","tuesday","wednesday","thursday","friday"]
 
         data = {}
 
         for day in days:
-
-            # we will scroll till the element is visible
-            changer = driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[2]/div[2]/canvas")
-            driver.execute_script("arguments[0].scrollIntoView();", changer)
-
-            # time.sleep(5)
-
+            wait = WebDriverWait(driver, 10)
             if(day=="all"):
                 data["In time"] = startTime
                 data["Out time"] = endTime
@@ -63,23 +67,23 @@ def doCall(startTime, endTime):
                 # we will stringify the data
                 data["End date"] = today
             elif(day=="monday"):
-                driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[2]").click()
+
+                element = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[2]")))
+                element.click()
+                
+                # driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[2]").click()
                 driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[3]").click()
                 driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[4]").click()
                 driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[5]").click()
-            
             elif(day=="tuesday"):
-                driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[2]").click()
                 driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[1]").click()
-                
+                driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[2]").click()
             elif(day=="wednesday"):
                 driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[2]").click()
                 driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[3]").click()
-
             elif(day=="thursday"):
                 driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[3]").click()
                 driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[4]").click()
-
             elif(day=="friday"):
                 driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[4]").click()
                 driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[5]/div/div[3]/div[1]/div[1]/label[5]").click()
@@ -101,6 +105,7 @@ def doCall(startTime, endTime):
 
             profit2021_str = profit2021.get_property('innerText')
             profit2021_str = profit2021_str.replace('₹','').strip()
+            # print(profit2021_str)
             profit2022_str = profit2022.replace('₹','').strip()
             profit2023_str = profit2023.replace('₹','').strip()
             overAllProfit_str = overAllProfit.replace('₹','').strip()
@@ -130,7 +135,9 @@ def doCall(startTime, endTime):
             data[day+" Reward to risk ratio"] = rewardToRiskRatio_str
             data[day+" Expectancy ratio"] = expectancyRatio_str
 
-        thread = threading.Thread(target=append_to_excel, args=(data,))
+            print(data)
+
+        thread = threading.Thread(target=putDataIntoFile, args=(data,))
         threadsToWrite.append(thread)
 
 def write_times_to_file(data):
@@ -147,14 +154,19 @@ def process_data(data):
     doCall(data[0], data[1])
 
 def read_file(filename):
+
+
+    # we will click on login button in the top right corner of navbar
     driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[1]/nav/button[1]").click()
 
+    # we will enter the username and password
     driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[1]/div/div[2]/div/form/div[1]/input").send_keys("7896907179")
     driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[1]/div/div[2]/div/form/div[2]/div/input").send_keys("SamsungS9+")
 
+    # we will click on the login button
     driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/div[1]/div/div[2]/div/form/button").click()
 
-    time.sleep(4)
+    time.sleep(2)
 
         
     with open(filename, 'r') as file:
@@ -165,6 +177,7 @@ def read_file(filename):
 
     # Process each chunk in a separate thread
     for chunk in chunks:
+        time.sleep(1)
         threads = []
         if(threadsToWrite.__len__() >= 5):
             for i in threadsToWrite:
@@ -176,12 +189,10 @@ def read_file(filename):
             threads.append(thread)
         for th in threads:
             th.start()
-        for th in threads:
             th.join()
     for i in threadsToWrite:
         i.start()
         i.join()
-    threadsToWrite.clear()
         
 import pandas as pd
 
