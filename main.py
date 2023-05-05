@@ -142,7 +142,6 @@ def write_times_to_file():
 def process_data(data):
     data = data.split()
 
-    doCall("7896907179", "SamsungS9+", data[0], data[1])
 
 def read_file(filename):
     with open(filename, 'r') as file:
@@ -177,7 +176,6 @@ write_times_to_file()
 # how to put output in a text file
 
 
-# input_values = [("7896907179", "SamsungS9+","0916","1529"),("7896907179", "SamsungS9+","0922","1520"),("7896907179", "SamsungS9+","0925","1320")]
 
 # threads = []
 
